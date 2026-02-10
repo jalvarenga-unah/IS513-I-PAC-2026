@@ -1,5 +1,3 @@
-const { cpSync } = require("fs")
-
 
 const numeros = [1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10]
 
@@ -26,9 +24,16 @@ console.log('------------------')
 const nueva_lista = numeros.map((value, index, array) => {
     if (value % 2 == 0)
         return value
+    // return undefined // implicitamente retorna undefined
 })
 
 console.log(nueva_lista)
+
+const lista_dobles = numeros.map((value, index, array) => {
+    return value * 2
+})
+
+console.log(lista_dobles)
 
 
 const nueva_lista_2 = numeros.filter((value, index, array) => {
