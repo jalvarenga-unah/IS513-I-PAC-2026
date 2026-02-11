@@ -1,7 +1,5 @@
 
 
-
-
 const miPromesa = (n1, n2) => {
     // resolve y reject son referencias a funciones
     return new Promise((resolve, reject) => {
