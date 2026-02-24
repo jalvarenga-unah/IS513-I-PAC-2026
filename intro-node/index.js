@@ -11,7 +11,7 @@ const server = createServer((req, res) => {
         case 'GET':
             switch (req.url) {
                 case '/':
-                    res.write('Hola mundo')
+                    res.write('<h1>Hola mundo</h1>') // texto plano
                     res.end()
                     break
                 case '/users':
@@ -49,7 +49,7 @@ const server = createServer((req, res) => {
 })
 
 // definir un puerto
-const PORT = 3000 // 1- 65535
+const PORT = 3001 // 1- 65535
 
 // empezar a escuchar el puerto
 server.listen(PORT, () => {
