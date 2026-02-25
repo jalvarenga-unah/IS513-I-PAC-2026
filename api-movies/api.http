@@ -1,0 +1,23 @@
+### consultar
+GET http://localhost:3000/movies/124142?genre=Action&genre=Science%20Fiction&releaseYear=2010
+
+### crear
+POST http://localhost:3000/movies
+Content-Type:   application/json
+
+{
+    "title": "The Matrix",
+    "director": "Lana Wachowski, Lilly Wachowski",
+    "posterUrl": "https://m.media-amazon.com/images/I/51EG732BV3L.jpg",
+    "releaseYear": 1999,
+    "genre": [
+        "Science Fiction",
+        "Action"
+    ]
+}
+
+### eliminar
+DELETE http://localhost:3000/movies/
+
+### actualizar
+PUT http://localhost:3000/movies/20
