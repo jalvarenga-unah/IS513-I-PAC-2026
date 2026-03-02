@@ -18,21 +18,38 @@ app.get('/', (req, res) => {
     res.send('<h1>Hola mundo</h1>')
 })
 
+const MOVIES = [
+    {
+        id: 1241254,
+        title: "The Matrix",
+        director: "Lana Wachowski, Lilly Wachowski",
+        posterUrl: "https://m.media-amazon.com/images/I/51EG732BV3L.jpg",
+    }
+]
+
+app.get('/movies/:movie_id', (req, res) => {
+
+    const id = Number(req.params.movie_id) // id debe ser un numero
+
+    if (isNaN(id) || id < 0) {
+        return res.status(400).json({
+            message: 'el parametro debe ser un numero'
+        })
+    }
+
+    res.json({
+        message: 'Obtener una pelicula por su id',
+        id, //id:id
+        queries: req.query
+    })
+})
+
 app.get('/movies', (req, res) => {
     res.json({
         message: 'Obtener todas las peliculas',
-        queries: req.query
+        data: MOVIES
     })
 })
-
-app.get('/movies/:movie_id', (req, res) => {
-    res.json({
-        message: 'Obtener una pelicula por su id',
-        id: req.params.movie_id,
-        queries: req.query
-    })
-})
-
 
 app.post('/movies', (req, res) => {
 

@@ -1,4 +1,7 @@
 ### consultar
+
+GET http://localhost:3000/movies
+
 GET http://localhost:3000/movies/124142?genre=Action&genre=Science%20Fiction&releaseYear=2010
 
 ### crear
