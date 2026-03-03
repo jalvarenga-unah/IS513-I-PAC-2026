@@ -20,10 +20,11 @@ app.get('/', (req, res) => {
 
 const MOVIES = [
     {
-        id: 1241254,
+        id: 1234,
         title: "The Matrix",
-        director: "Lana Wachowski, Lilly Wachowski",
+        director: ["Lana Wachowski", "Lilly Wachowski"],
         posterUrl: "https://m.media-amazon.com/images/I/51EG732BV3L.jpg",
+        genre: ['action', 'Sci-fi']
     }
 ]
 
@@ -37,14 +38,41 @@ app.get('/movies/:movie_id', (req, res) => {
         })
     }
 
+    //consultar la bbdd
+    const movie = MOVIES.find((movie) => {
+        return movie.id === id
+    })
+
+    if (!movie) {
+        res.status(404).json({
+            message: 'pelicula no encontrada',
+            data: null
+        })
+    }
+
     res.json({
         message: 'Obtener una pelicula por su id',
-        id, //id:id
-        queries: req.query
+        data: movie
     })
 })
 
 app.get('/movies', (req, res) => {
+
+    const { query } = req
+
+    if (query.genre) {
+        const filtered_movies = MOVIES.filter((movie) => {
+            return movie.genre.some((genre) => genre.toLowerCase() === query.genre.toLowerCase())
+        })
+
+        return res.json({
+            message: 'Obtener todas las peliculas',
+            data: filtered_movies
+        })
+
+    }
+
+
     res.json({
         message: 'Obtener todas las peliculas',
         data: MOVIES

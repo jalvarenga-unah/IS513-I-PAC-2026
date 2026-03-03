@@ -1,8 +1,8 @@
-### consultar
-
+### consultar todas las peliculas
 GET http://localhost:3000/movies
 
-GET http://localhost:3000/movies/124142?genre=Action&genre=Science%20Fiction&releaseYear=2010
+### consultar una pelicula por id
+GET http://localhost:3000/movies/12345
 
 ### crear
 POST http://localhost:3000/movies
