@@ -1,26 +1,18 @@
 import MOVIES from '../data/movies.json' with { type: 'json' }
+import { getAllMovies } from '../service/movie.js'
 
-export const getAll = (req, res) => {
+export const getAll = async (req, res) => {
 
     const { query } = req // server
 
-    if (query.genre) {//server
+    //TODO: capturar los errores que puedan venir de la bbdd
 
-        //consulta a la bbdd (service/model)
-        const filtered_movies = MOVIES.filter((movie) => {
-            return movie.genre.some((genre) => genre.toLowerCase() === query.genre.toLowerCase())
-        })
-
-        return res.json({
-            message: 'Obtener todas las peliculas',
-            data: filtered_movies
-        })// server
-
-    }
+    //consulta a la bbdd (service/model)
+    const filtered_movies = await getAllMovies({ query: { ...query } })
 
     res.json({
         message: 'Obtener todas las peliculas',
-        data: MOVIES
+        data: filtered_movies
     })//server
 }
 
