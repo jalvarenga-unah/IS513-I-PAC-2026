@@ -1,23 +1,35 @@
 import MOVIES from '../data/movies.json' with { type: 'json' }
 
-export const getAllMovies = async ({ query } = {}) => {
-    //conectarse a la base de datos
-    //hacer la consutla (query)
-    // retornar los resultados
+export default class Movie {
 
-    //concatenar con un where
-    if (query.genre) {
+    static getAll = async ({ genre, director, year } = {}) => {
+        //conectarse a la base de datos
+        //hacer la consutla (query)
+        // retornar los resultados
 
-        return MOVIES.filter((movie) => {
+        //concatenar con un where
+        if (genre) {
 
-            return movie.genre.some((genre) => {
-                return genre.toLowerCase() === query.genre.toLowerCase()
+            //throw -> genera un error generico
+            // throw Error('user not found')
+
+            return MOVIES.filter((movie) => {
+                return movie.genre.some((g) => {
+                    return g.toLowerCase() === genre.toLowerCase()
+                })
             })
+        }
 
+
+        //select *from 
+        return MOVIES
+    }
+
+    static find = async (id) => {
+        return MOVIES.find((movie) => {
+            return movie.id === id
         })
     }
 
-
-    //select *from 
-    return MOVIES
 }
+

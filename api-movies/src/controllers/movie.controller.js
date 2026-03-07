@@ -1,22 +1,37 @@
 import MOVIES from '../data/movies.json' with { type: 'json' }
-import { getAllMovies } from '../service/movie.js'
+import Movie from '../service/movie.js'
 
 export const getAll = async (req, res) => {
 
     const { query } = req // server
 
     //TODO: capturar los errores que puedan venir de la bbdd
+    const dataFilter = {}
+
+    if (query.genre) dataFilter.genre = query.genre
+    if (query.director) dataFilter.director = query.director
+    if (query.year) dataFilter.year = query.year
 
     //consulta a la bbdd (service/model)
-    const filtered_movies = await getAllMovies({ query: { ...query } })
+    try {
 
-    res.json({
-        message: 'Obtener todas las peliculas',
-        data: filtered_movies
-    })//server
+        const filtered_movies = await Movie.getAll(dataFilter)
+
+        res.json({
+            message: 'Obtener todas las peliculas',
+            data: filtered_movies
+        })//server
+
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Error al consultar la base de datos: ' + e.message,
+            data: null
+        })
+    }
+
 }
 
-export const getById = (req, res) => {
+export const getById = async (req, res) => {
 
     const id = Number(req.params.movie_id) // id debe ser un numero
 
@@ -27,9 +42,12 @@ export const getById = (req, res) => {
     }
 
     //consultar la bbdd
-    const movie = MOVIES.find((movie) => {
-        return movie.id === id
-    })
+    // const movie = MOVIES.find((movie) => {
+    //     return movie.id === id
+    // })
+
+    //desde el servicio
+    const movie = await Movie.find(id)
 
     if (!movie) {
         res.status(404).json({

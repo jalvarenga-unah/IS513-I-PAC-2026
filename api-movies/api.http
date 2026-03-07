@@ -1,5 +1,5 @@
 ### consultar todas las peliculas
-GET http://localhost:3000/movies?genre=action
+GET http://localhost:3000/moviess
 
 
 ### consultar una pelicula por id
