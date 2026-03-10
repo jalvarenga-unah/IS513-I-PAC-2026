@@ -1,5 +1,6 @@
-import MOVIES from '../data/movies.json' with { type: 'json' }
 import Movie from '../service/movie.js'
+import { validateMovieSchema } from '../schemas/movie.schema.js'
+
 
 export const getAll = async (req, res) => {
 
@@ -68,14 +69,16 @@ export const create = (req, res) => {
     const data = req.body // server
 
     // validar que los datos sean correctos -> server
-    if (!data.title) {
-        return res.status(400)
-            .json(
-                {
-                    status: 'error',
-                    message: 'El titulo es requerido'
-                }
-            )
+    const errors = validateMovieSchema(data)
+    if (errors) {
+
+        console.log(errors.error.issues)
+
+        res.status(400).json({
+            status: 'error',
+            message: 'verifique la información enviada'
+        })
+
     }
 
 
