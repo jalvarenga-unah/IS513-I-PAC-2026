@@ -63,33 +63,34 @@ export const getById = async (req, res) => {
     })
 }
 
-export const create = (req, res) => {
+export const create = async (req, res) => {
 
     //obtener los datos
-    const data = req.body // server
+    const body = req.body // server
 
     // validar que los datos sean correctos -> server
-    const errors = validateMovieSchema(data)
-    if (errors) {
+    const { success, data, error, errors } = validateMovieSchema(body)
 
-        console.log(errors.error.issues)
-
+    if (!success) {
         res.status(400).json({
             status: 'error',
-            message: 'verifique la información enviada'
+            message: 'verifique la información enviada',
+            errors: errors?.error?.issues || JSON.parse(error.message)
         })
-
     }
 
 
     //TODO: guardar los datos en la base de datos
     // Service / Model
+    const newMovie = await Movie.create(data)
+
 
     // responder al cliente -> server
     res
         .status(201)
         .json({
             status: 'success',
-            message: 'Pelicula creada correctamente'
+            message: 'Pelicula creada correctamente',
+            data: newMovie
         })
 }
