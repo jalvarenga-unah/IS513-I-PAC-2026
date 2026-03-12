@@ -59,7 +59,6 @@ export default class Movie {
     static delete = async (id) => {
 
         const idx = MOVIES.findIndex((movie) => movie.id === id)
-
         MOVIES.splice(idx, 1)
 
     }

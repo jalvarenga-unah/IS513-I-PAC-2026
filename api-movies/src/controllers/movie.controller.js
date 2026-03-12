@@ -1,5 +1,5 @@
 import Movie from '../service/movie.js'
-import { validateMovieSchema } from '../schemas/movie.schema.js'
+import { validateMovieSchema, validatePartialMovieSchema } from '../schemas/movie.schema.js'
 
 
 export const getAll = async (req, res) => {
@@ -34,13 +34,13 @@ export const getAll = async (req, res) => {
 
 export const getById = async (req, res) => {
 
-    const id = Number(req.params.movie_id) // id debe ser un numero
+    const { id } = req.params
 
-    if (isNaN(id) || id < 0) {
-        return res.status(400).json({
-            message: 'el parametro debe ser un numero'
-        })
-    }
+    // if (isNaN(id) || id < 0) {
+    //     return res.status(400).json({
+    //         message: 'el parametro debe ser un numero'
+    //     })
+    // }
 
     //consultar la bbdd
     // const movie = MOVIES.find((movie) => {
@@ -93,4 +93,63 @@ export const create = async (req, res) => {
             message: 'Pelicula creada correctamente',
             data: newMovie
         })
+}
+
+export const update = async (req, res) => {
+
+    const { id } = req.params
+
+    const movie = await Movie.find(id)
+
+    if (!movie) {
+        return res.status(404).json(
+            {
+                status: 'error',
+                message: 'Pelicula no encontrada'
+            }
+        )
+    }
+
+    const { success, errors, error, data } = validatePartialMovieSchema(req.body)
+
+    if (!success) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Datos incorrectos',
+            errors: errors?.error?.issues || JSON.parse(error.message)
+        })
+    }
+
+    const updatedMovie = await Movie.update(id, data)
+
+    res.json({
+        status: 'success',
+        message: 'Pelicula actualizada',
+        data: updatedMovie
+    })
+
+}
+
+export const deleteMovie = async (req, res) => {
+    const { id } = req.params
+
+    const movie = await Movie.find(id)
+
+    if (!movie) {
+        return res.status(404).json(
+            {
+                status: 'error',
+                message: 'Pelicula no encontrada'
+            }
+        )
+    }
+
+    await Movie.delete(id)
+
+
+    res.json({
+        status: "success",
+        message: "Pelicula eliminada"
+    })
+
 }

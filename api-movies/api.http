@@ -22,9 +22,13 @@ Content-Type:   application/json
 DELETE http://localhost:3000/movies/1234
 
 ### actualizar
-PUT http://localhost:3000/movies/20
+PUT http://localhost:3000/movies/1234
 Content-Type:   application/json
 
 {
-    "posterUrl": "https://m.media-amazon.com/images/I/51EG732BV3L.jpg"
+    "title": "The Matrix Reloaded",
+    "director": [4,6]
 }
+
+### eliminar un recurso
+DELETE http://localhost:3000/movies/1234

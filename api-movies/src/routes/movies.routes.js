@@ -1,13 +1,14 @@
 
 import { Router } from 'express'
-import { getAll, getById, create } from '../controllers/movie.controller.js'
+import { getAll, getById, create, update, deleteMovie } from '../controllers/movie.controller.js'
 
 const moviesRouter = Router()
 
 //definición de rutas Hijas
 moviesRouter.get('/', getAll)
-moviesRouter.get('/:movie_id', getById)
+moviesRouter.get('/:id', getById)
 moviesRouter.post('/', create)
-
+moviesRouter.put('/:id', update)
+moviesRouter.delete('/:id', deleteMovie)
 
 export default moviesRouter
