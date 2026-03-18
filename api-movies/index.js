@@ -1,7 +1,7 @@
 // import { createserver } from 'node:http'
 import express from 'express'
 import moviesRouter from './src/routes/movies.routes.js'
-
+import { isAuth } from './src/middlewares/isAuth.js'
 // const server = createserver((req, res)=>{})
 const app = express()
 const PORT = 3000
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 })
 
 //aqui, se define el punto de entrada (endpoint) "/movies"
-app.use('/movies', moviesRouter)
+app.use('/movies', isAuth, moviesRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

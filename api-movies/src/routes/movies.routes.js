@@ -1,6 +1,7 @@
 
 import { Router } from 'express'
 import { getAll, getById, create, update, deleteMovie } from '../controllers/movie.controller.js'
+import { isAuth } from '../middlewares/isAuth.js'
 
 const moviesRouter = Router()
 
