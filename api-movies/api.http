@@ -3,7 +3,8 @@ GET http://localhost:3000/movies
 Authorization: Bearer 23n4kdm2uh234238
 
 ### consultar una pelicula por id
-GET http://localhost:3000/movies/a5764f7c-49c0-42d0-8e4a-58bb9d60e869
+GET http://localhost:3000/movies/2 or 1=1 -- fbwehjfbwkehbf 
+Authorization: Bearer 23n4kdm2uh234238
 
 ### crear
 POST http://localhost:3000/movies
