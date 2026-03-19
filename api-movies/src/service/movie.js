@@ -5,6 +5,7 @@ export default class Movie {
 
     static getAll = async ({ genre, director, year } = {}) => {
 
+
         const [rows] = await pool.query(`SELECT 
                                     m.id, 
                                     m.title, 

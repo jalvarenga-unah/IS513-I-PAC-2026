@@ -1,12 +1,19 @@
 import mysql from 'mysql2/promise';
+// import dotenv from 'dotenv'
+import { loadEnvFile } from 'node:process'
+
+if (!process.env.DB_HOST) {
+    // dotenv.config()
+    loadEnvFile()
+}
 
 // Create the connection pool. The pool-specific settings are the defaults
 export const pool = mysql.createPool({
-    host: 'localhost', //https://miapp.midominio.com
-    user: 'unah',
-    database: 'db_movies_unah',
-    port: 3308,
-    password: 'unah2026',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+    password: process.env.DB_PASSWORD,
 
     waitForConnections: true,
     connectionLimit: 10,
