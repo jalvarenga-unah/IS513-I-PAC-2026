@@ -54,8 +54,8 @@ export default class Movie {
                                 LEFT JOIN genres g ON mg.genre_id = g.id
                                 LEFT JOIN movie_directors md ON m.id = md.movie_id
                                 LEFT JOIN directors d ON md.director_id = d.id
-                                where m.id = ?
-                                GROUP BY m.id;`, [id]); //TODO: revisar el bind param
+                                where m.id = :id
+                                GROUP BY m.id;`, { id }); //bind param
 
         return rows
     }

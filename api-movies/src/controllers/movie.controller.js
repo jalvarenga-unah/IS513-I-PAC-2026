@@ -18,9 +18,33 @@ export const getAll = async (req, res) => {
 
         const filtered_movies = await Movie.getAll(dataFilter)
 
+
+        if (!filtered_movies) {
+            res.json({
+                message: 'Obtener todas las peliculas',
+                data: []
+            })//server
+        }
+
+
+        const newList = filtered_movies.map((movie) => {
+
+            return {
+                ...movie,
+                genres: movie.genres.split(', '),
+                directors: movie.directors.split(', ')
+            }
+
+        })     // [{}]
+
+        // filtered_movies.forEach((movie) => {
+        //     movie.genres = movie.genres.split(', ')
+        //     movie.directors = movie.directors.split(', ')
+        // })
+
         res.json({
             message: 'Obtener todas las peliculas',
-            data: filtered_movies
+            data: newList
         })//server
 
     } catch (e) {
@@ -48,19 +72,26 @@ export const getById = async (req, res) => {
     // })
 
     //desde el servicio
-    const movie = await Movie.find(id)
+    try {
+        const [movie] = await Movie.find(id)
 
-    if (!movie) {
-        res.status(404).json({
-            message: 'pelicula no encontrada',
+        if (!movie) {
+            res.status(404).json({
+                message: 'pelicula no encontrada',
+                data: null
+            })
+        }
+
+        res.json({
+            message: 'Obtener una pelicula por su id',
+            data: movie
+        })
+    } catch {
+        res.status(500).json({
+            message: 'Error en el server',
             data: null
         })
     }
-
-    res.json({
-        message: 'Obtener una pelicula por su id',
-        data: movie
-    })
 }
 
 export const create = async (req, res) => {
