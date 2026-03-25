@@ -4,6 +4,7 @@ import moviesRouter from './src/routes/movies.routes.js'
 import { isAuth } from './src/middlewares/isAuth.js'
 import dotenv from 'dotenv'
 import { loadEnvFile } from 'node:process'
+import authsRoutes from './src/routes/auth.routes.js'
 
 // dotenv.config() // carga las variables de entorno (.env)
 loadEnvFile()
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 
 //aqui, se define el punto de entrada (endpoint) "/movies"
 app.use('/movies', isAuth, moviesRouter)
+app.use('/auth', authsRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
