@@ -10,9 +10,12 @@ export const isAuth = (req, res, next) => {
     const token = authorization.split(' ')[1]
 
     try {
-        const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+        const { rol, username } = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
         //TODO: modificar la req
+
+        req.rol = rol
+        req.username = username
 
         next()// permite el paso a la siguente parte del ciclo de vida de la peticion
     }

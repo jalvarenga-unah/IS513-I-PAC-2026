@@ -96,6 +96,14 @@ export const getById = async (req, res) => {
 
 export const create = async (req, res) => {
 
+    if (!req.permissions.includes('movie.create')) {
+        res.status(401).json({
+            status: 'error',
+            message: 'No tiene permisos para realizar esta acción',
+            errors: null
+        })
+    }
+
     //obtener los datos
     const body = req.body // server
 

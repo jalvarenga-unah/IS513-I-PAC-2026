@@ -41,7 +41,8 @@ export default class AuthController {
             // generar el token
             const dataToken = {
                 issuer: 'midominio.com',
-                username: user.username
+                username: user.username,
+                rol: 'admin' // user.rol
             }
 
             const token = jwt.sign(dataToken, process.env.JWT_SECRET_KEY, {

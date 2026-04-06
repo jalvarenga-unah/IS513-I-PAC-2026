@@ -5,6 +5,7 @@ import { isAuth } from './src/middlewares/isAuth.js'
 import dotenv from 'dotenv'
 import { loadEnvFile } from 'node:process'
 import authsRoutes from './src/routes/auth.routes.js'
+import { hasPermission } from './src/middlewares/hasPermission.js'
 
 // dotenv.config() // carga las variables de entorno (.env)
 loadEnvFile()
@@ -27,7 +28,7 @@ app.get('/', (req, res) => {
 })
 
 //aqui, se define el punto de entrada (endpoint) "/movies"
-app.use('/movies', isAuth, moviesRouter)
+app.use('/movies', [isAuth, hasPermission], moviesRouter)
 app.use('/auth', authsRoutes)
 
 app.listen(PORT, () => {
